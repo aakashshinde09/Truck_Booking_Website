@@ -1,12 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page isELIgnored="false"%>
 <!DOCTYPE html>
-<%@page import="java.util.List"%>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Register.jsp</title>
+<title>login</title>
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -23,7 +22,7 @@ body {
 
 .container {
 	width: 100%;
-	height: 81vh;
+	height: 115vh;
 	display: flex;
 	flex-direction: row;
 }
@@ -40,25 +39,24 @@ body {
 }
 
 .left {
-	flex: 1.5;
+	flex: 1.2;
 	padding: 40px;
-
 	background-color: rgba(0, 0, 0, 0.7);
 }
 
 img {
-height:100%;
-width:100%;
+	height: 80%;
+	width: 100%;
 }
 
 .right {
-	flex: 1.5;
-	padding: 40px;
+	flex: 1.3;
+	padding: 0px;
 	background-color: rgba(0, 0, 0, 0.7);
 }
 
 .heading {
-	font-size: 3rem;
+	font-size: 2.9rem;
 	margin-bottom: 1rem;
 	color: #f10365;
 	text-align: justify;
@@ -171,98 +169,49 @@ width:100%;
 	<div class="container">
 		<div class="container">
 			<div class="left">
-				<img alt="register image" src="components/register.jpg">
+				<img alt="register image" src="components/login.jpg">
 			</div>
-			<div class="right">
+			<div class="right p-5">
 
-
-
-
-				<form action="userRegister" method="post">
-
-					<h2 class="formHeading text-center">Register</h2>
+				<form action="userLogin" method="post">
+					<h2 class="formHeading mb-2 text-center">User Login</h2>
 
 					<c:if test="${not empty succmsg }">
-						<p class="text-center text-success fs-4">${succmsg }</p>
+						<p class="text-success text-center fs-4">${succmsg }</p>
 						<c:remove var="succmsg" scope="session" />
 					</c:if>
 
 					<c:if test="${not empty error }">
-						<p class="text-center text-danger fs-4">${error }</p>
+						<p class="text-danger text-center fs-4">${error }</p>
 						<c:remove var="error" scope="session" />
 					</c:if>
-					<!-- <div class="form-outline form-white mb-4">
-                  <label class="form-label" for="typeEmailX">Id</label> <input
-                    type="text" name="id" id="name"
-                    class="form-control form-control-lg" />
-                </div> -->
 
 					<div class="form-outline form-white mb-4">
-						<input type="text" name="name" id="name"
-							class="form-control form-control-lg"
-							placeholder="Enter Full Name" />
+						<label class="form-label text-light" for="typeEmailX">Email</label> <input
+							type="email" name="email" id="typeEmailX"
+							class="form-control form-control-lg" />
 					</div>
 
 					<div class="form-outline form-white mb-4">
-						<input type="email" name="email" id="typeEmailX"
-							class="form-control form-control-lg" placeholder="Enter Email" />
+						<label class="form-label text-light" for="typePasswordX">Password</label> <input
+							type="password" name="password" id="typePasswordX"
+							class="form-control form-control-lg" />
 					</div>
 
-					<div class="form-outline form-white mb-4">
-						<input type="tel" name="mobile" id="typePasswordX"
-							class="form-control form-control-lg"
-							placeholder="Enter Mobile Number" />
-					</div>
-
-					<div class="form-outline form-white mb-4">
-						<input type="password" name="password" id="typePasswordX"
-							class="form-control form-control-lg" placeholder="Enter Password" />
-					</div>
-
-
+					<input type="hidden" name="fromBooking" value=${param.fromBooking } />
 
 					<button class="btn btn-outline-primary btn-lg px-5 col-md-12"
-						type="submit">Register</button>
-					<p class="text-light fs-5 mt-3">
-						Already Registered ?<a class="text-decoration-none"
-							href="login.jsp"> Login</a>
+						type="submit">Login</button>
+
+					<p class="text-light mt-3 fs-5">
+						Don't have account ?<a class="text-decoration-none"
+							href="register.jsp"> Register</a>
 					</p>
 				</form>
-
-
-
 
 			</div>
 		</div>
 	</div>
-	<script>
-		function updateDestinations() {
-			var pickupLocation = document.getElementById("pickup").value;
-			var destinations = document.getElementById("drop");
-			destinations.innerHTML = ""; // Clear existing options
-			var destinationsData = {
-				"Pune" : [ "Mumbai", "Hyderabad", "Bangalore", "Buldana" ],
-				"Mumbai" : [ "Pune", "Hyderabad", "Bangalore", "Buldana" ],
-				"Bangalore" : [ "Hyderabad", "Pune", "Mumbai", "Buldana" ],
-				"Hyderabad" : [ "Bangalore", "Pune", "Mumbai", "Buldana" ]
-			// Add more mappings as needed
-			};
-			var destinationOptions = destinationsData[pickupLocation];
-			if (destinationOptions) {
-				destinationOptions.forEach(function(destination) {
-					var option = document.createElement("option");
-					option.text = destination;
-					option.value = destination;
-					destinations.appendChild(option);
-				});
-			} else {
-				var defaultOption = document.createElement("option");
-				defaultOption.text = "Destination Location";
-				destinations.appendChild(defaultOption);
-			}
-		}
-	</script>
-
 
 	<%@include file="components/footer.jsp"%>
 </body>
