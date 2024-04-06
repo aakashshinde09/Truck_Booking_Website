@@ -41,7 +41,7 @@
 						aria-current="page" href="register.jsp"><i
 							class="fa-solid fa-calendar-check"></i> Register</a></li>
 					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="#"><i class="fa-solid fa-user"></i>
+						aria-current="page" href="login.jsp"><i class="fa-solid fa-user"></i>
 							Login</a></li>
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" href="#"><i
