@@ -1,68 +1,108 @@
+
+<%@page import="CargoCrafter.entity.Location"%>
+<%@page import="CargoCrafter.DAO.LocationDAOImpl"%>
+<%@page import="CargoCrafter.DB.DBConnect"%>
+<%@page import="CargoCrafter.DAO.UserDAOImpl"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page isELIgnored="false"%>
-
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<title>admin dashboard</title>
+<meta charset="UTF-8">
+<title>Update Location</title>
+<script src="../js/custom.js"></script>
 
-<!-- Bootstrap CSS -->
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 <!----css3---->
 <link rel="stylesheet" href="../css/custom.css">
 <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
 
-<%@include file="../components/allcss.jsp"%>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+	rel="stylesheet">
 
+
+
+
+<!--google material icon-->
+<link href="https://fonts.googleapis.com/css2?family=Material+Icons"
+	rel="stylesheet">
+<%@include file="../components/allcss.jsp"%>
 </head>
 <body>
-
-	<%@include file="../components/navbar.jsp"%>
-
-
+	
+	<%@include file="../webcomponents/dash1form.jsp"%>
 	<c:if test="${empty adminobj}">
 		<c:redirect url="../login.jsp" />
 	</c:if>
-	<c:if test="${not empty adminobj}">
 
-	</c:if>
-
-
-	<div class="wrapper">
-
-		<%@include file="../webcomponents/sidebar.jsp"%>
-
-		<!-- Page Content  -->
-		<div id="content">
-
-			<%@include file="../webcomponents/topnav.jsp"%>
+	<section class="vh-80 gradient-custom ">
+		<div class="container py-5 h-80">
+			<div
+				class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-12 col-md-8 col-lg-6 col-xl-5">
+					<div class="card bg-light text-dark shadow bg-body rounded"
+						style="border-radius: 1rem;">
+						<div class="card-body p-3 ">
 
 
-			<div class="main-content">
 
-				<%@include file="../webcomponents/update_location.jsp"%>
+							<h2 class="fw-bold mb-2 text-uppercase text-center">Update
+								Locations</h2>
 
+							<%
+							int id = Integer.parseInt(request.getParameter("id"));
+							UserDAOImpl us = new UserDAOImpl(DBConnect.getConn());
+							LocationDAOImpl lc = new LocationDAOImpl(DBConnect.getConn());
+							Location loc = lc.getLocationsById(id);
+							%>
+
+
+							<form action="../update_location" method="post">
+								<div class="form-outline form-white mb-4">
+									<label class="form-label" hidden for="typeEmailX">Id</label> <input
+										type="text" name="id" value=<%=loc.getId()%> id="name"
+										class="form-control form-control-lg" hidden />
+								</div>
+								<div class="form-outline form-white mb-4">
+									<label class="form-label" for="typeEmailX">Source</label> <input
+										type="text" value=<%=loc.getSource()%> name="source" id="name"
+										class="form-control form-control-lg" />
+								</div>
+
+								<div class="form-outline form-white mb-4">
+									<label class="form-label" for="typeEmailX">Destination</label>
+									<input type="text" value=<%=loc.getDestination()%>
+										name="destination" id="typeEmailX"
+										class="form-control form-control-lg" />
+								</div>
+
+								<div class="form-outline form-white mb-4">
+									<label class="form-label" for="typePasswordX">Total Km</label>
+									<input type="text" value=<%=loc.getTotal_km()%> name="total_km"
+										id="typePasswordX" class="form-control form-control-lg" />
+								</div>
+
+								<div class="form-outline form-white mb-4">
+									<label class="form-label" for="typePasswordX">Price /
+										Km</label> <input type="text" name="price_per_km"
+										value=<%=loc.getPrice_per_km()%> id="typePasswordX"
+										class="form-control form-control-lg" />
+								</div>
+
+								<button class="btn btn-outline-primary btn-lg px-5 col-md-12"
+									type="submit">Update Location</button>
+							</form>
+						</div>
+					</div>
+				</div>
 			</div>
-
 		</div>
-	</div>
-
-	<!-- Optional JavaScript -->
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="../js/jquery-3.3.1.slim.min.js"></script>
-	<script src="../js/popper.min.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
-	<script src="../js/jquery-3.3.1.min.js"></script>
-	<script src="../js/custom.js"></script>
-
+	</section>
+	<%@include file="../webcomponents/dash2form.jsp"%>
 </body>
-
 </html>
-
-

@@ -13,39 +13,46 @@ import CargoCrafter.DAO.LocationDAOImpl;
 import CargoCrafter.DB.DBConnect;
 import CargoCrafter.entity.Location;
 
-
-@WebServlet("/addlocation")
-public class AddLocation extends HttpServlet{
+@WebServlet("/update_location")
+public class UpdateLocation extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		super.doPost(req, resp);
 		
+		
+		int id = Integer.parseInt(req.getParameter("id"));
 		String source = req.getParameter("source");
 		String destination = req.getParameter("destination");
-		int total_km = Integer.parseInt(req.getParameter("total_km"));
-		int price_per_km = Integer.parseInt(req.getParameter("price_per_km"));
+		int totalkm = Integer.parseInt(req.getParameter("total_km"));
+		int price = Integer.parseInt(req.getParameter("price_per_km"));
 		
 		Location l = new Location();
+		
+		l.setId(id);
 		l.setSource(source);
 		l.setDestination(destination);
-		l.setTotal_km(total_km);
-		l.setPrice_per_km(price_per_km);
-		
-		LocationDAOImpl ld = new LocationDAOImpl(DBConnect.getConn());
-		
-		boolean saveLocation = ld.saveLocation(l);
+		l.setTotal_km(totalkm);
+		l.setPrice_per_km(price);
 		
 		HttpSession session = req.getSession();
+		LocationDAOImpl ld = new LocationDAOImpl(DBConnect.getConn());
 		
-		if(saveLocation) {
-			session.setAttribute("succmsg", "Location Added");
-			resp.sendRedirect("admin/location_dtls.jsp");
+		try {
+			int updateLocation = ld.updateLocation(l);
+			
+			if(updateLocation != 0) {
+				session.setAttribute("succmsg", "Location Updated..!!");
+				resp.sendRedirect("/CargoCrafter/admin/location_dtls.jsp");
+			}
+			else {
+				session.setAttribute("error", "Something wrong on server");
+				resp.sendRedirect("/CargoCrafter/admin/location_dtls.jsp");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		else {
-			session.setAttribute("error", "Something wrong on Server");
-			resp.sendRedirect("admin/add_location.jsp");
-		}
+		
 	}
 }

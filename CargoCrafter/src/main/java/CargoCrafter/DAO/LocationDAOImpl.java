@@ -3,6 +3,7 @@ package CargoCrafter.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,5 +91,29 @@ public class LocationDAOImpl {
 		}
 		
 		return l;
+	}
+	
+	public int updateLocation(Location location) throws SQLException {
+
+			String sql = "Update locations set source=?,destination=?,total_km=?,price_per_km=? where id=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, location.getSource());
+			ps.setString(2, location.getDestination());
+			ps.setInt(3, location.getTotal_km());
+			ps.setInt(4, location.getPrice_per_km());
+			ps.setInt(5, location.getId());
+			int res = ps.executeUpdate();
+			return res;
+		
+	}
+	
+	public int deleteLocation(int id) throws SQLException {
+		String sql = "delete from locations where id=?";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, id);
+		
+		int res = ps.executeUpdate();
+		
+		return res;
 	}
 }
