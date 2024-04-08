@@ -21,6 +21,8 @@ public class UserLogin extends HttpServlet{
 		// TODO Auto-generated method stub
 //		super.doPost(req, resp);
 		
+		System.out.println("In the User Login Servlet");
+		
 		try {
 			UserDAOImpl dao = new UserDAOImpl(DBConnect.getConn());
 			String email = req.getParameter("email");
@@ -30,6 +32,7 @@ public class UserLogin extends HttpServlet{
 			
 			if("admin@gmail.com".equals(email) && "admin".equals(password)) {
 				User us = new User();
+				System.out.println("Checking admin credetials in the user login servlet");
 				us.setName("Admin");
 				session.setAttribute("adminobj", us);
 				resp.sendRedirect("admin/home.jsp");
@@ -37,7 +40,9 @@ public class UserLogin extends HttpServlet{
 			}
 			else {
 				User us = dao.userLogin(email, password);
+				System.out.println("Checking the users credentials");
 				if(us != null) {
+					System.out.println("Inside user if block");
 					session.setAttribute("userobj", us);
 					resp.sendRedirect("index.jsp");
 				}

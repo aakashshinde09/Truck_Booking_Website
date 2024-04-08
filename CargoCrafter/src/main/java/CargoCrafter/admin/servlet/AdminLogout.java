@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/logout")
+@WebServlet("/admin_logout")
 public class AdminLogout extends HttpServlet{
 
 	@Override
